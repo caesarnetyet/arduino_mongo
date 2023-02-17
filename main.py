@@ -3,6 +3,9 @@ from controllers.arduino_controller.sensor import Sensor
 from interfaces.distance import Distance
 
 #En sensor va la interfaz, el puerto del arduino y opcionalmente el baudrate o la banda de bits
+
+#todas las interfaces deben tener un _id para que la base de datos pueda identificarlos
+
 distance = Sensor(interface=Distance, port="COM3")
 
 #Cuando definimos el arduino controller le pasamos el nombre de la base de datos
