@@ -9,6 +9,7 @@ from interfaces.distance import Distance
 distance = Sensor(interface=Distance, port="COM3")
 
 #Cuando definimos el arduino controller le pasamos el nombre de la base de datos
+
 arduino = ArduinoController("Test2")
 
 arduino.add_arduino(distance)

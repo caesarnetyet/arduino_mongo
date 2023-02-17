@@ -15,4 +15,4 @@ class ArduinoController:
         while True:
             for arduino in self.arduinos:
                 self.db.set_collection(arduino.interface_name())
-                self.db.insert(arduino.get_dict())
+                self.db.insert(arduino.get_dict(), arduino.interface_name())

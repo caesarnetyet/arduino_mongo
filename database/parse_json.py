@@ -6,13 +6,14 @@ class ParseJson:
         self.file_path = file_path
 
     def read(self):
-        with open(self.file_path, 'r') as f:
-            try:
-                loaded = json.load(f)
-                return loaded
-            except:
-                return []
+        try:
+            with open(self.file_path, 'r') as f:
+                return json.load(f)
+
+        except:
+            self.write([])
+            return []
 
     def write(self, data):
-        with open(self.file_path, 'w') as f:
+        with open(self.file_path, 'w+') as f:
             json.dump(data, f)
