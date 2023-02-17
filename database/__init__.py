@@ -12,8 +12,7 @@ class Database:
 
     def insert(self, data):
         try:
-            self._collection.insert_one(data)
-            print("Data inserted")
+
             failed = ParseJson('dumps/failed_dumps.json').read()
             if len(failed) > 0:
                 try:
@@ -22,6 +21,8 @@ class Database:
                     print("Failed dumps inserted")
                 except:
                     print("Failed to insert failed dumps")
+            self._collection.insert_one(data)
+            print("Data inserted")
         except:
             failed = ParseJson('dumps/failed_dumps.json').read()
             failed.append(data)

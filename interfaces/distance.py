@@ -2,5 +2,6 @@ from typing import TypedDict
 
 
 class Distance(TypedDict):
-    value: float
-    unit: str
+    _id : str
+    Distance: float
+    Unit: str

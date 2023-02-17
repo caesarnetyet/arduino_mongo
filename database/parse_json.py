@@ -7,7 +7,11 @@ class ParseJson:
 
     def read(self):
         with open(self.file_path, 'r') as f:
-            return json.load(f)
+            try:
+                loaded = json.load(f)
+                return loaded
+            except:
+                return []
 
     def write(self, data):
         with open(self.file_path, 'w') as f:
