@@ -1,0 +1,17 @@
+{
+  "_id": "5a7a5b0b5b4d1d0014d1b1b1",
+  "model": "v1",
+  "client_id": "5a7a5b0b5b4d1d0014d1b1b0",
+  "sensors": [
+    {
+      "tipo": "Distancia",
+      "valor": 0.0,
+      "id": "D1"
+    },
+    {
+      "tipo": "Distancia",
+      "valor": 0.0,
+      "id": "D2"
+    }
+  ]
+}

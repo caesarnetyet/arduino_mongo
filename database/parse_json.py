@@ -9,7 +9,6 @@ class ParseJson:
         try:
             with open(self.file_path, 'r') as f:
                 return json.load(f)
-
         except:
             self.write([])
             return []

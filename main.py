@@ -1,17 +1,11 @@
 from controllers.arduino_controller import ArduinoController
 from controllers.arduino_controller.sensor import Sensor
-from interfaces.distance import Distance
 
-#En sensor va la interfaz, el puerto del arduino y opcionalmente el baudrate o la banda de bits
 
-#todas las interfaces deben tener un _id para que la base de datos pueda identificarlos
+sensors = Sensor(type= 'Distance', port="/dev/cu.usbmodem14101")
 
-distance = Sensor(interface=Distance, port="COM3")
+arduino = ArduinoController("dustbinv1", 1)
 
-#Cuando definimos el arduino controller le pasamos el nombre de la base de datos
+arduino.add_arduino(sensors)
 
-arduino = ArduinoController("Test2")
-
-arduino.add_arduino(distance)
-
-arduino.export_data()
+arduino.export_arduino_data()

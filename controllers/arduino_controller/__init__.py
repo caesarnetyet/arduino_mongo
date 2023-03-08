@@ -1,26 +1,48 @@
-import concurrent.futures
+import threading
+import time
+from uuid import uuid4
+
+from controllers.arduino_controller.arduino import Arduino
 from controllers.arduino_controller.sensor import Sensor
-from database import Database
+from database import Database, ParseJson
 
 
 class ArduinoController:
-    def __init__(self, db_name: str = "test", threads: int = 4):
-        self.db_name = db_name
-        self.arduinos: list[Sensor] = []
-        self.db = Database(db_name)
-        self.num_threads = threads
+    def __init__(self, model: str = 'dustbinv1',  expiration_time: int = 15):
+        self.num_threads = 4
+        self.model: str = model
+        self.client_id: int = 1
+        self.expiration_time = expiration_time
+        self.db_name = 'test'
+        self.collection_name = self.model
+        self.sensors: list[Sensor] = []
+        self.db = Database(self.db_name)
+        self.db.set_collection(self.collection_name)
+        self.deletion_thread = threading.Thread(target=self.delete_data)
+        self.deletion_thread.start()
 
     def add_arduino(self, arduino: Sensor):
-        self.arduinos.append(arduino)
+        self.sensors.append(arduino)
 
-    def export_data(self):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.num_threads) as executor:
-            futures = []
-            for arduino in self.arduinos:
-                future = executor.submit(self.export_arduino_data, arduino)
-                futures.append(future)
-            concurrent.futures.wait(futures)
+    def set_client(self, id: int):
+        self.client_id = id
 
-    def export_arduino_data(self, arduino: Sensor):
-        self.db.set_collection(arduino.interface_name())
-        self.db.insert(arduino.get_dict(), arduino.interface_name())
+    def delete_data(self):
+        while True:
+            time.sleep(self.expiration_time * 60)
+            ParseJson(self.collection_name).write([])
+            print('Data deleted')
+
+    def export_arduino_data(self):
+        while True:
+            for sensor_ in self.sensors:
+                dict_sensor = sensor_.get_sensors()
+                if dict_sensor is not None:
+                    arduino_list: Arduino = {
+                        'model': self.model,
+                        'client_id': self.client_id,
+                        'sensors': dict_sensor,
+                        '_id': str(uuid4())
+                    }
+                    self.db.insert(arduino_list, self.collection_name)
+
