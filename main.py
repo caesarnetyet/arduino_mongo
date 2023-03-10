@@ -6,9 +6,6 @@ distancia = Sensor(5, 6, tipo="dis")
 sonido = Sensor(25, tipo="son")
 temp_hum = Sensor(pin_in=4, tipo="temp")
 
-temperatura = Temperatura()
-while True:
-    print(temperatura.get_temperatura_humedad())
 
 arduino = ArduinoController("dustbinv1", 1)
 
