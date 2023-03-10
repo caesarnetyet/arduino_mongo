@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 from pymongo import MongoClient
 from database.parse_json import ParseJson
 

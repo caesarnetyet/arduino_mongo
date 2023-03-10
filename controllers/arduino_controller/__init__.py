@@ -9,7 +9,6 @@ from database import Database, ParseJson
 
 class ArduinoController:
     def __init__(self, model: str = 'dustbinv1',  expiration_time: int = 15):
-        self.num_threads = 4
         self.model: str = model
         self.client_id: int = 1
         self.expiration_time = expiration_time
@@ -24,9 +23,6 @@ class ArduinoController:
     def add_arduino(self, arduino: Sensor):
         self.sensors.append(arduino)
 
-    def set_client(self, id: int):
-        self.client_id = id
-
     def delete_data(self):
         while True:
             time.sleep(self.expiration_time * 60)
@@ -35,14 +31,16 @@ class ArduinoController:
 
     def export_arduino_data(self):
         while True:
+            sensors_data = []
             for sensor_ in self.sensors:
-                dict_sensor = sensor_.get_sensors()
-                if dict_sensor is not None:
-                    arduino_list: Arduino = {
-                        'model': self.model,
-                        'client_id': self.client_id,
-                        'sensors': dict_sensor,
-                        '_id': str(uuid4())
-                    }
-                    self.db.insert(arduino_list, self.collection_name)
+                data = sensor_.get_data()
+                if data is not None:
+                    sensors_data.append(sensor_.get_data())
+            if sensors_data is not None:
+                arduino_list: Arduino = {
+                    'model': self.model,
+                    'sensors': sensors_data,
+                    '_id': str(uuid4())
+                }
+                self.db.insert(arduino_list, self.collection_name)
 
