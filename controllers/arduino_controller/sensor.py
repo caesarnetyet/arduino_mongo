@@ -45,14 +45,12 @@ class Sensor:
         GPIO.output(self.pin_out, GPIO.LOW)
 
     def blink(self):
+        self.toggle = not self.toggle
         if self.toggle:
-            self.off()
-            self.toggle = False
-            return self.get_dict("Led apagado")
-        else:
             self.on()
-            self.toggle = True
-            return self.get_dict("Led encendido")
+        else:
+            self.off()
+        return self.get_dict(self.toggle)
 
     def get_dict(self,  valor):
         return {
