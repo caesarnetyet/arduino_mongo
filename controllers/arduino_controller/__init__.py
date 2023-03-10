@@ -31,18 +31,21 @@ class ArduinoController:
 
     def export_arduino_data(self):
         while True:
-            sensors_data = []
+
             for sensor_ in self.sensors:
                 data = sensor_.get_data()
                 if data is not None:
-                    sensors_data.append(sensor_.get_data())
+                    dict_data = {
+                        'tipo': sensor_.type,
+                        'detalles': sensor_.get_data(),
+                        '_id': str(uuid4())
+                    }
+                    self.db.insert(dict_data, self.collection_name)
                 else:
-                    sensors_data.append({"error": "No data", "read": sensor_.read(), "tipo": sensor_.type})
-            if sensors_data is not None:
-                arduino_list: Arduino = {
-                    'model': self.model,
-                    'sensors': sensors_data,
-                    '_id': str(uuid4())
-                }
-                self.db.insert(arduino_list, self.collection_name)
-
+                    dict_data = {
+                        'tipo': sensor_.type,
+                        'detalles': 'No data',
+                        'raw_data': sensor_.read(),
+                        '_id': str(uuid4())
+                    }
+                    self.db.insert(dict_data, self.collection_name)

@@ -47,9 +47,8 @@ class Sensor:
         self.off()
         time.sleep(1)
 
-    def get_dict(self, tipo, valor):
+    def get_dict(self, valor):
         return {
-            "tipo": tipo,
             "valor": valor,
             "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         }
