@@ -48,10 +48,10 @@ class Sensor:
         self.toggle = not self.toggle
         if self.toggle:
             self.on()
+            return self.get_dict(self.toggle)
         else:
             self.off()
-        return self.get_dict(self.toggle)
-
+            return self.get_dict(self.toggle)
     def get_dict(self,  valor):
         return {
             "valor": valor,
