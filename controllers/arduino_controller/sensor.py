@@ -70,7 +70,6 @@ class Sensor:
         GPIO.output(self.pin_out, False)
         time.sleep(0.00001)
         GPIO.output(self.pin_out, True)
-
         while GPIO.input(self.pin_in) == False:
             pulse_start = time.time()
         while GPIO.input(self.pin_in) == True:
