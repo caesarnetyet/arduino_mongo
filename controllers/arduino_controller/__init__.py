@@ -36,6 +36,8 @@ class ArduinoController:
                 data = sensor_.get_data()
                 if data is not None:
                     sensors_data.append(sensor_.get_data())
+                else:
+                    sensors_data.append({"error": "No data", "read": sensor_.read(), "tipo": sensor_.type})
             if sensors_data is not None:
                 arduino_list: Arduino = {
                     'model': self.model,
