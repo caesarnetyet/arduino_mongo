@@ -58,9 +58,9 @@ class Sensor:
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            return datos
+            return {"temp": datos[0], "hum": datos[1]}
         else:
-            return [0, 0]
+            return {"temp": 0, "hum": 0}
 
     def medir(self):
         time.sleep(1)
