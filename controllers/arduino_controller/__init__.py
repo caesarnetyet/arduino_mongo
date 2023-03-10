@@ -41,3 +41,11 @@ class ArduinoController:
                         '_id': str(uuid4())
                     }
                     self.db.insert(dict_data, self.collection_name)
+                else:
+                    dict_data = {
+                        'tipo': sensor_.type,
+                        'detalles': 'No data',
+                        'raw_data': sensor_.read(),
+                        '_id': str(uuid4())
+                    }
+                    self.db.insert(dict_data, self.collection_name)
