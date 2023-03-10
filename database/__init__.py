@@ -1,13 +1,14 @@
 from pymongo import MongoClient
 from database.parse_json import ParseJson
+import certifi
+ca = certifi.where()
 
 
 class Database:
     def __init__(self, database="test", collection="test"):
-        self.host = "localhost"
 
-        self.port = 27017
-        self.mongo_client = MongoClient(self.host, self.port, serverSelectionTimeoutMS=1000)
+        self.mongo_client = MongoClient("mongodb+srv://admin:administrador@cluster0.fzaqu9v.mongodb.net/",
+                                        serverSelectionTimeoutMS=3000, tlsCAFile=ca)
         self._db = self.mongo_client[database]
         self._collection = self._db[collection]
 
