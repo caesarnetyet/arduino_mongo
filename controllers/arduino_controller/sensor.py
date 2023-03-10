@@ -1,16 +1,18 @@
 import time
 from datetime import datetime
+from uuid import uuid4
 
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 
 
 class Sensor:
-    def __init__(self, pin_in=0, pin_out=0, tipo="son"):
+    def __init__(self, pin_in=0, pin_out=0, tipo="son", description=""):
         self.adafruit = Adafruit_DHT.DHT11
         self.type = tipo
         self.pin_in = pin_in
         self.pin_out = pin_out
+        self.description = description
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_in, GPIO.IN)
         GPIO.setup(pin_out, GPIO.OUT)
@@ -53,11 +55,18 @@ class Sensor:
             self.off()
             return None
 
-
     def get_dict(self,  valor):
         return {
+            "tipo": self.type,
+            "id": self.__class__.__name__,
             "valor": valor,
-            "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            "detalles": {
+                "pin_in": self.pin_in,
+                "pin_out": self.pin_out,
+                "descripcion": self.description
+            },
+            "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+            "_id": str(uuid4())
         }
 
     def get_temperatura_humedad(self):

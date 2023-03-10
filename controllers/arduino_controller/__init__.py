@@ -35,15 +35,11 @@ class ArduinoController:
             for sensor_ in self.sensors:
                 data = sensor_.get_data()
                 if data is not None:
-                    dict_data = {
-                        'tipo': sensor_.type,
-                        'detalles': sensor_.get_data(),
-                        '_id': str(uuid4())
-                    }
-                    self.db.insert(dict_data, self.collection_name)
+                    self.db.insert(data, self.collection_name)
                 else:
                     dict_data = {
                         'tipo': sensor_.type,
+                        "id": sensor_.__class__.__name__,
                         'detalles': 'No data',
                         'raw_data': sensor_.read(),
                         '_id': str(uuid4())
