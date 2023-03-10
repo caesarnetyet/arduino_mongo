@@ -23,7 +23,7 @@ class Sensor:
         elif self.type == "temp":
             return self.get_temperatura_humedad()
         else:
-            return self.get_dict("generico", self.read())
+            return self.get_dict(self.read())
 
     def read(self):
         return GPIO.input(self.pin_in)
@@ -31,9 +31,9 @@ class Sensor:
     def get_sound(self):
         data = self.read()
         if data == 1:
-            return self.get_dict("sonido", "Sonido detectado")
+            return self.get_dict("Sonido detectado")
         else:
-            return self.get_dict("sonido", "Sonido no detectado")
+            return self.get_dict( "Sonido no detectado")
 
     def on(self):
         GPIO.output(self.pin_out, GPIO.HIGH)
@@ -47,7 +47,7 @@ class Sensor:
         self.off()
         time.sleep(1)
 
-    def get_dict(self, valor):
+    def get_dict(self,  valor):
         return {
             "valor": valor,
             "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -62,7 +62,7 @@ class Sensor:
                 "temperatura": temperatura,
                 "humedad": humedad
             }
-            return self.get_dict("Temperatura y humedad", valores)
+            return self.get_dict(valores)
         else:
             return None
 
@@ -77,7 +77,7 @@ class Sensor:
             pulse_end = time.time()
         sig_time = pulse_end - pulse_start
         distance = sig_time / 0.000058
-        return self.get_dict("Distancia", distance)
+        return self.get_dict( distance)
 
     def __del__(self):
         GPIO.cleanup()
