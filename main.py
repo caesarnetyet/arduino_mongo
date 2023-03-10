@@ -2,7 +2,7 @@ from controllers.arduino_controller import ArduinoController
 from controllers.arduino_controller.sensor import Sensor
 
 
-sensors = Sensor(15, 12, "son")
+sensors = Sensor(5,6, "dis")
 
 arduino = ArduinoController("dustbinv1", 1)
 
