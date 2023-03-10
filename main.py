@@ -3,7 +3,7 @@ from controllers.arduino_controller.sensor import Sensor
 
 distancia = Sensor(5, 6, tipo="dis")
 sonido = Sensor(25, tipo="son")
-temp_hum = Sensor(23, tipo="temp")
+temp_hum = Sensor(pin_in=4, tipo="temp")
 
 arduino = ArduinoController("dustbinv1", 1)
 
