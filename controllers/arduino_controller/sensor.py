@@ -51,6 +51,7 @@ class Sensor:
             return self.get_dict(self.toggle)
         else:
             self.off()
+            return None
 
 
     def get_dict(self,  valor):
