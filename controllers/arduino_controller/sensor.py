@@ -54,15 +54,13 @@ class Sensor:
         }
 
     def get_temperatura_humedad(self):
-        temperatura, humedad = Adafruit_DHT.read(self.adafruit, self.pin_in)
+        humedad, temperatura = Adafruit_DHT.read(self.adafruit, self.pin_in)
+
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            return {
-                "temperatura": datos[1],
-                "humedad": datos[0]
-            }
+            return datos
         else:
-            return None
+            return [0, 0]
 
     def medir(self):
         time.sleep(1)
