@@ -14,6 +14,7 @@ class Sensor:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_in, GPIO.IN)
         GPIO.setup(pin_out, GPIO.OUT)
+        self.toggle = False
 
     def get_data(self):
         if self.type == "son":
@@ -22,6 +23,8 @@ class Sensor:
             return self.medir()
         elif self.type == "temp":
             return self.get_temperatura_humedad()
+        elif self.type == "led":
+            return self.blink()
         else:
             return self.get_dict(self.read())
 
@@ -42,10 +45,14 @@ class Sensor:
         GPIO.output(self.pin_out, GPIO.LOW)
 
     def blink(self):
-        self.on()
-        time.sleep(1)
-        self.off()
-        time.sleep(1)
+        if self.toggle:
+            self.off()
+            self.toggle = False
+            return self.get_dict("Led apagado")
+        else:
+            self.on()
+            self.toggle = True
+            return self.get_dict("Led encendido")
 
     def get_dict(self,  valor):
         return {
@@ -58,9 +65,9 @@ class Sensor:
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            return {"temp": datos[0], "hum": datos[1]}
+            return {"temp": datos[0], "hum": datos[1], "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
         else:
-            return {"temp": 0, "hum": 0}
+            return {"temp": 0, "hum": 0, "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
 
     def medir(self):
         time.sleep(1)
