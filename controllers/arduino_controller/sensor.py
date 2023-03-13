@@ -71,6 +71,9 @@ class Sensor:
             "_id": str(uuid4())
         }
 
+    def get_class_name(self):
+        return self.__class__.__name__
+
     def get_temperatura_humedad(self):
         humedad, temperatura = Adafruit_DHT.read(self.adafruit, self.pin_in)
 

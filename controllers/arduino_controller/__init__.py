@@ -30,6 +30,9 @@ class ArduinoController:
             ParseJson(self.collection_name).write([])
             print('Data deleted')
 
+
+
+
     def export_arduino_data(self):
         while True:
 
@@ -39,11 +42,11 @@ class ArduinoController:
                     self.db.insert(data, self.collection_name)
                 else:
                     dict_data = {
+                        '_id': str(uuid4()),
                         'tipo': sensor_.type,
-                        "id": sensor_.__class__.__name__,
+                        "id": sensor_.get_class_name(),
                         'detalles': 'No data',
                         'raw_data': sensor_.read(),
-                        '_id': str(uuid4())
                     }
                     pprint(dict_data)
                     self.db.insert(dict_data, self.collection_name)
