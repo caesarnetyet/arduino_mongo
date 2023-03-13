@@ -65,7 +65,7 @@ class Sensor:
             "tipo": self.type,
             "id": self.id_,
             "valor": valor,
-            "detalles": {
+            "detalles_sensor": {
                 "pin_in": self.pin_in,
                 "pin_out": self.pin_out,
                 "descripcion": self.description
