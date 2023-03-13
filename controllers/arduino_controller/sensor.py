@@ -77,6 +77,7 @@ class Sensor:
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
+            print(datos)
             return self.get_dict({"temp": datos[0], "hum": datos[1]})
         else:
             return self.get_dict({"temp": 0, "hum": 0})
