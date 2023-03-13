@@ -13,6 +13,8 @@ class Sensor:
         self.pin_in = pin_in
         self.pin_out = pin_out
         self.description = description
+        self.pulse_start = 0.0
+        self.pulse_end = 0.0
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_in, GPIO.IN)
         GPIO.setup(pin_out, GPIO.OUT)
@@ -83,11 +85,11 @@ class Sensor:
         GPIO.output(self.pin_out, False)
         time.sleep(0.00001)
         GPIO.output(self.pin_out, True)
-        while GPIO.input(self.pin_in) == False:
-            pulse_start = time.time()
-        while GPIO.input(self.pin_in) == True:
-            pulse_end = time.time()
-        sig_time = pulse_end - pulse_start
+        while not GPIO.input(self.pin_in):
+            self.pulse_start = time.time()
+        while GPIO.input(self.pin_in):
+            self.pulse_end = time.time()
+        sig_time = self.pulse_end - self.pulse_start
         distance = sig_time / 0.000058
         return self.get_dict( distance)
 
