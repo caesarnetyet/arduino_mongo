@@ -8,7 +8,6 @@ class Sensor:
     def __init__(self, pin_in=0, pin_out=0, tipo="son", id_="Sensor", description=""):
         self.adafruit = Adafruit_DHT.DHT11
         self.id_ = id_
-
         self.type = tipo
         self.pin_in = pin_in
         self.pin_out = pin_out
@@ -16,8 +15,10 @@ class Sensor:
         self.pulse_start = 0.0
         self.pulse_end = 0.0
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin_in, GPIO.IN)
-        GPIO.setup(pin_out, GPIO.OUT)
+        if tipo is not "hum" or "temp":
+            GPIO.setup(pin_in, GPIO.IN)
+            GPIO.setup(pin_out, GPIO.OUT)
+
         self.toggle = False
 
     def get_data(self):
