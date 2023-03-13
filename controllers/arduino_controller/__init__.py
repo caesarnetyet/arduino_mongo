@@ -1,5 +1,6 @@
 import threading
 import time
+from pprint import pprint
 from uuid import uuid4
 
 from controllers.arduino_controller.arduino import Arduino
@@ -44,4 +45,5 @@ class ArduinoController:
                         'raw_data': sensor_.read(),
                         '_id': str(uuid4())
                     }
+                    pprint(dict_data)
                     self.db.insert(dict_data, self.collection_name)
