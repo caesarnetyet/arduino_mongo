@@ -78,10 +78,11 @@ class Sensor:
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
             if self.type == 'temp':
+
                 return self.get_dict(datos[0])
             if self.type == 'hum':
                 return self.get_dict(datos[1])
-
+            print(datos)
     def medir(self):
         time.sleep(1)
         GPIO.output(self.pin_out, False)
