@@ -1,10 +1,8 @@
 import time
 from datetime import datetime
 from uuid import uuid4
-
 import Adafruit_DHT
 import RPi.GPIO as GPIO
-
 
 class Sensor:
     def __init__(self, pin_in=0, pin_out=0, tipo="son", id_="Sensor", description=""):
@@ -74,12 +72,13 @@ class Sensor:
 
     def get_temperatura_humedad(self):
         temperatura, humedad = Adafruit_DHT.read(self.adafruit, self.pin_in)
+        print(temperatura, humedad)
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
             return self.get_dict(datos)
         else:
-            return self.get_dict([0, 0])
+            return None
 
     def medir(self):
         time.sleep(1)
