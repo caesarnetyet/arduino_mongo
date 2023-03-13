@@ -9,6 +9,9 @@ hum = Sensor(pin_in=21, tipo="hum",  id_="hum1", description="Detector de humeda
 led = Sensor(pin_out=4, tipo="led", id_="led1", description="Led de actividad")
 temperature = Temperatura(21)
 
+while True:
+    print(temperature.get_temperatura_humedad())
+
 arduino = ArduinoController("dustbinv1", 1)
 
 arduino.add_arduino(distancia)
