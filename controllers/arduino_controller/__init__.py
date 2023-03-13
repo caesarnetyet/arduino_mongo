@@ -37,7 +37,7 @@ class ArduinoController:
                 data = sensor_.get_data()
                 if data is not None:
                     self.db.insert(data, self.collection_name)
-                time.sleep(15)
+            time.sleep(15)
                 # else:
                 #     # dict_data = {
                 #     #     '_id': str(uuid4()),
