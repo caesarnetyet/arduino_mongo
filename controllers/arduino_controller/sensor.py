@@ -7,8 +7,9 @@ import RPi.GPIO as GPIO
 
 
 class Sensor:
-    def __init__(self, pin_in=0, pin_out=0, tipo="son", description=""):
+    def __init__(self, pin_in=0, pin_out=0, tipo="son", id_="Sensor", description=""):
         self.adafruit = Adafruit_DHT.DHT11
+        self.id_ = id_
         self.type = tipo
         self.pin_in = pin_in
         self.pin_out = pin_out
@@ -27,6 +28,8 @@ class Sensor:
             return self.medir()
         elif self.type == "temp":
             return self.get_temperatura_humedad()
+        elif self.type == "hum":
+            return self.get_temperatura_humedad()
         elif self.type == "led":
             return self.blink()
         else:
@@ -40,7 +43,7 @@ class Sensor:
         if data == 1:
             return self.get_dict("Sonido detectado")
         else:
-            return self.get_dict( "Sonido no detectado")
+            return self.get_dict("Sonido no detectado")
 
     def on(self):
         GPIO.output(self.pin_out, GPIO.HIGH)
@@ -57,7 +60,7 @@ class Sensor:
             self.off()
             return None
 
-    def get_dict(self,  valor):
+    def get_dict(self, valor):
         return {
             "tipo": self.type,
             "id": self.__class__.__name__,
@@ -71,17 +74,13 @@ class Sensor:
             "_id": str(uuid4())
         }
 
-    def get_class_name(self):
-        return self.__class__.__name__
-
     def get_temperatura_humedad(self):
         humedad, temperatura = Adafruit_DHT.read(self.adafruit, self.pin_in)
 
-        if temperatura is not None and humedad is not None:
-            datos = [temperatura, humedad]
-            return self.get_dict({"temp": datos[0], "hum": datos[1]})
-        else:
-            return self.get_dict({"temp": 0, "hum": 0})
+        if self.type == "temp" and temperatura is not None:
+            return self.get_dict(temperatura)
+        if self.type == "hum" and humedad is not None:
+            return self.get_dict(humedad)
 
     def medir(self):
         time.sleep(1)
@@ -94,7 +93,7 @@ class Sensor:
             self.pulse_end = time.time()
         sig_time = self.pulse_end - self.pulse_start
         distance = sig_time / 0.000058
-        return self.get_dict( distance)
+        return self.get_dict(distance)
 
     def __del__(self):
         GPIO.cleanup()

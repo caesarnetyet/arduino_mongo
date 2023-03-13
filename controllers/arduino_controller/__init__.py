@@ -42,7 +42,7 @@ class ArduinoController:
                         '_id': str(uuid4()),
                         'tipo': sensor_.type,
                         "id": sensor_.get_class_name(),
-                        'detalles': 'No data',
+                        'detalles_sensor': 'No data',
                         'raw_data': sensor_.read(),
                     }
                     # pprint(dict_data)
