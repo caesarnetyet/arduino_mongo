@@ -30,9 +30,6 @@ class ArduinoController:
             ParseJson(self.collection_name).write([])
             print('Data deleted')
 
-
-
-
     def export_arduino_data(self):
         while True:
 

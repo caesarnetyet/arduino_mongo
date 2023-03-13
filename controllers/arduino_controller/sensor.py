@@ -79,9 +79,9 @@ class Sensor:
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            return {"temp": datos[0], "hum": datos[1], "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
+            return self.get_dict({"temp": datos[0], "hum": datos[1]})
         else:
-            return {"temp": 0, "hum": 0, "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
+            return self.get_dict({"temp": 0, "hum": 0})
 
     def medir(self):
         time.sleep(1)
