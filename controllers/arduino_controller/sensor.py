@@ -28,8 +28,6 @@ class Sensor:
             return self.medir()
         elif self.type == "temp":
             return self.get_temperatura_humedad()
-        elif self.type == "hum":
-            return self.get_temperatura_humedad()
         elif self.type == "led":
             return self.blink()
         else:
@@ -77,10 +75,12 @@ class Sensor:
     def get_temperatura_humedad(self):
         humedad, temperatura = Adafruit_DHT.read(self.adafruit, self.pin_in)
 
-        if self.type == "temp" and temperatura is not None:
-            return self.get_dict(temperatura)
-        if self.type == "hum" and humedad is not None:
-            return self.get_dict(humedad)
+        if temperatura is not None and humedad is not None:
+            datos = [temperatura, humedad]
+            if self.type == 'temp':
+                return self.get_dict(datos[0])
+            if self.type == 'hum':
+                return self.get_dict(datos[1])
 
     def medir(self):
         time.sleep(1)
