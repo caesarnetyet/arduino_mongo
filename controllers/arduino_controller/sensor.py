@@ -79,7 +79,7 @@ class Sensor:
             datos = [temperatura, humedad]
             return self.get_dict(datos)
         else:
-            return [0, 0]
+            return self.get_dict([0, 0])
 
     def medir(self):
         time.sleep(1)
