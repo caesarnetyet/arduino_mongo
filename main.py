@@ -11,6 +11,7 @@ temperature = Temperatura(21)
 
 while True:
     print(temperature.get_temperatura_humedad())
+    print(temp.get_temperatura_humedad())
 
 arduino = ArduinoController("dustbinv1", 1)
 
