@@ -7,7 +7,7 @@ temp = Sensor(pin_in=21, tipo="temp",  id_="temp1", description="Detector de hum
 hum = Sensor(pin_in=21, tipo="hum",  id_="hum1", description="Detector de humedad para el bote")
 led = Sensor(pin_out=4, tipo="led", id_="led1", description="Led de actividad")
 
-arduino = ArduinoController("dustbinv1", 1)
+arduino = ArduinoController("dustbinv1", 15)
 
 arduino.add_arduino(distancia)
 arduino.add_arduino(sonido)
