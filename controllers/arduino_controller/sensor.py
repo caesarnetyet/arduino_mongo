@@ -8,6 +8,7 @@ class Sensor:
     def __init__(self, pin_in=0, pin_out=0, tipo="son", id_="Sensor", description=""):
         self.adafruit = Adafruit_DHT.DHT11
         self.id_ = id_
+
         self.type = tipo
         self.pin_in = pin_in
         self.pin_out = pin_out
@@ -26,6 +27,8 @@ class Sensor:
             return self.medir()
         elif self.type == "temp":
             return self.get_temperatura_humedad()
+        elif self.type == "hum":
+            return self.get_temperatura_humedad()
         elif self.type == "led":
             return self.blink()
         else:
@@ -35,6 +38,7 @@ class Sensor:
         return GPIO.input(self.pin_in)
 
     def get_sound(self):
+
         data = self.read()
         if data == 1:
             return self.get_dict("Sonido detectado")
@@ -75,8 +79,10 @@ class Sensor:
         print(temperatura, humedad, self.adafruit, self.pin_in)
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            print(datos)
-            return self.get_dict(datos)
+            if self.type == 'temp':
+                return self.get_dict(datos[0])
+            if self.type == 'hum':
+                return self.get_dict(datos[1])
         else:
             return None
 
