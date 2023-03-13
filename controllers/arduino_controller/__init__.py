@@ -45,5 +45,5 @@ class ArduinoController:
                         'detalles': 'No data',
                         'raw_data': sensor_.read(),
                     }
-                    pprint(dict_data)
+                    # pprint(dict_data)
                     self.db.insert(dict_data, self.collection_name)
