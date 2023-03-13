@@ -41,7 +41,7 @@ class ArduinoController:
                     dict_data = {
                         '_id': str(uuid4()),
                         'tipo': sensor_.type,
-                        "id": sensor_.get_class_name(),
+                        "id": sensor_.id_,
                         'detalles_sensor': 'No data',
                         'raw_data': sensor_.read(),
                     }
