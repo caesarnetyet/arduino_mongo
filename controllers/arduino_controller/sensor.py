@@ -61,7 +61,7 @@ class Sensor:
     def get_dict(self, valor):
         return {
             "tipo": self.type,
-            "id": self.__class__.__name__,
+            "id": self.id_,
             "valor": valor,
             "detalles": {
                 "pin_in": self.pin_in,
@@ -77,12 +77,10 @@ class Sensor:
 
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
-            if self.type == 'temp':
+            return self.get_dict({"temp": datos[0], "hum": datos[1]})
+        else:
+            return self.get_dict({"temp": 0, "hum": 0})
 
-                return self.get_dict(datos[0])
-            if self.type == 'hum':
-                return self.get_dict(datos[1])
-            print(datos)
     def medir(self):
         time.sleep(1)
         GPIO.output(self.pin_out, False)
