@@ -81,8 +81,10 @@ class Sensor:
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
             if self.type == 'temp':
+                GPIO.cleanup()
                 return self.get_dict(datos[0])
             if self.type == 'hum':
+                GPIO.cleanup()
                 return self.get_dict(datos[1])
         else:
             return None

@@ -2,7 +2,7 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 
 
-class Temperatura:
+class Adafruit:
     def __init__(self, pin = 4):
         self.sensor = Adafruit_DHT.DHT11
         self.pin = pin
