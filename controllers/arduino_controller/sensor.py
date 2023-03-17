@@ -14,11 +14,11 @@ class Sensor:
         self.description = description
         self.pulse_start = 0.0
         self.pulse_end = 0.0
-        if tipo == "hum" or tipo == "temp":
-            self.adafruit = Adafruit_DHT.DHT11
-        else:
-            GPIO.setup(pin_in, GPIO.IN)
-            GPIO.setup(pin_out, GPIO.OUT)
+
+        self.adafruit = Adafruit_DHT.DHT11
+
+        GPIO.setup(pin_in, GPIO.IN)
+        GPIO.setup(pin_out, GPIO.OUT)
         GPIO.setmode(GPIO.BCM)
         self.toggle = False
 
@@ -77,7 +77,7 @@ class Sensor:
         }
 
     def get_temperatura_humedad(self):
-
+        GPIO.cleanup()
         temperatura, humedad = Adafruit_DHT.read(self.adafruit, self.pin_in)
         print(temperatura, humedad, self.adafruit, self.pin_in)
         if temperatura is not None and humedad is not None:
