@@ -3,6 +3,7 @@ import time
 from pprint import pprint
 from uuid import uuid4
 
+from Adafruit import Adafruit
 from controllers.arduino_controller.arduino import Arduino
 from controllers.arduino_controller.sensor import Sensor
 from database import Database, ParseJson
@@ -15,13 +16,13 @@ class ArduinoController:
         self.expiration_time = expiration_time
         self.db_name = 'test'
         self.collection_name = self.model
-        self.sensors: list[Sensor] = []
+        self.sensors: list[Sensor | Adafruit] = []
         self.db = Database(self.db_name)
         self.db.set_collection(self.collection_name)
         self.deletion_thread = threading.Thread(target=self.delete_data)
         self.deletion_thread.start()
 
-    def add_arduino(self, arduino: Sensor):
+    def add_arduino(self, arduino: Sensor | Adafruit):
         self.sensors.append(arduino)
 
     def delete_data(self):
