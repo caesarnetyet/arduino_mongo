@@ -6,7 +6,6 @@ import RPi.GPIO as GPIO
 
 class Sensor:
     def __init__(self, pin_in=0, pin_out=0, tipo="son", id_="Sensor", description=""):
-        self.adafruit = Adafruit_DHT.DHT11
         self.id_ = id_
         self.type = tipo
         self.pin_in = pin_in
@@ -14,11 +13,13 @@ class Sensor:
         self.description = description
         self.pulse_start = 0.0
         self.pulse_end = 0.0
-        GPIO.setmode(GPIO.BCM)
+
         if tipo != "hum" or tipo != "temp":
             GPIO.setup(pin_in, GPIO.IN)
             GPIO.setup(pin_out, GPIO.OUT)
-
+        else:
+            self.adafruit = Adafruit_DHT.DHT11
+        GPIO.setmode(GPIO.BCM)
         self.toggle = False
 
     def get_data(self):
@@ -81,10 +82,8 @@ class Sensor:
         if temperatura is not None and humedad is not None:
             datos = [temperatura, humedad]
             if self.type == 'temp':
-                GPIO.cleanup()
                 return self.get_dict(datos[0])
             if self.type == 'hum':
-                GPIO.cleanup()
                 return self.get_dict(datos[1])
         else:
             return None
