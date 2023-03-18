@@ -16,13 +16,13 @@ class ArduinoController:
         self.expiration_time = expiration_time
         self.db_name = 'test'
         self.collection_name = self.model
-        self.sensors: list[Sensor | Adafruit] = []
+        self.sensors: list[Sensor] = []
         self.db = Database(self.db_name)
         self.db.set_collection(self.collection_name)
         self.deletion_thread = threading.Thread(target=self.delete_data)
         self.deletion_thread.start()
 
-    def add_arduino(self, arduino: Sensor | Adafruit):
+    def add_arduino(self, arduino: Sensor):
         self.sensors.append(arduino)
 
     def delete_data(self):
