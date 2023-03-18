@@ -14,9 +14,8 @@ class Sensor:
         self.description = description
         self.pulse_start = 0.0
         self.pulse_end = 0.0
-        if tipo != "hum" or tipo != "temp":
-            GPIO.setup(pin_in, GPIO.IN)
-            GPIO.setup(pin_out, GPIO.OUT)
+        GPIO.setup(pin_in, GPIO.IN)
+        GPIO.setup(pin_out, GPIO.OUT)
         GPIO.setmode(GPIO.BCM)
         self.toggle = False
 
