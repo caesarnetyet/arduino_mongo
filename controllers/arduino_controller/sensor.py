@@ -14,9 +14,9 @@ class Sensor:
         self.description = description
         self.pulse_start = 0.0
         self.pulse_end = 0.0
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin_in, GPIO.IN)
         GPIO.setup(pin_out, GPIO.OUT)
-        GPIO.setmode(GPIO.BCM)
         self.toggle = False
 
     def get_data(self):
